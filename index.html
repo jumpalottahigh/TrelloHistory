@@ -4,10 +4,21 @@
   <meta charset="UTF-8">
   <meta name="author" content="Georgi Yanev">
   <title>Trello History Reader</title>
+  <link rel="stylesheet" href="bower_components\bootstrap\dist\css\bootstrap.min.css">
+  <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+  <script src="https://api.trello.com/1/client.js?key="></script>
+  <script src="js/app.js"></script>
 </head>
 <body>
-  <h1>Hello</h1>
-  <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-  <script src="https://api.trello.com/1/client.js?key=[AppKey]"></script>
+  <h1>Hello, enter board name to fetch history from:</h1>
+  <p>Your lists must be name according to this style for this to work: June 2016 /Month Year/</p>
+  <input id="board_name" type="text">
+  <button id="fetch">Fetch</button>
+  <div id="status" class="alert">
+    Hi
+  </div>
+  <div id="statusObject">
+    status trello object
+  </div>
 </body>
 </html>
