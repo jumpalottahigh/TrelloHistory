@@ -1,0 +1,11 @@
+{
+  "name": "TrelloHistory",
+  "version": "1.0.0",
+  "description": "Grab and display completed items in Trello",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Georgi Yanev",
+  "license": "MIT"
+}
