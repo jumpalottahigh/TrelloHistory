@@ -13,12 +13,25 @@
   <h1>Hello, enter board name to fetch history from:</h1>
   <p>Your lists must be name according to this style for this to work: June 2016 /Month Year/</p>
   <input id="board_name" type="text">
-  <button id="fetch">Fetch</button>
+  <button id="fetch_board">Fetch Board</button>
+  <button id="fetch_list">Fetch List</button>
+  <button id="get_all_boards">Get All BOards</button>
+  <button id="get_all_lists">Get All LISTS ON MASSBOARD</button>
+  <button id="search" class="btn btn-primary">SEARCH (uses ajax)</button>
+  <button id="get_all_cards">GET ALL CARDS</button>
   <div id="status" class="alert">
-    Hi
   </div>
-  <div id="statusObject">
-    status trello object
+  <br>
+  <br>
+  <br>
+  <div>
+    STEPS:
+    <hr>
+    <p>
+      1. Type board name and press "Fetch Board" <br>
+        -this gets the board ID from the name <br>
+      2. Press "Fetch List" and that gives you all cards/lists... <br>
+    </p>
   </div>
 </body>
 </html>
