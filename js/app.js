@@ -1,18 +1,4 @@
-//AUTHORIZE THE USER
-Trello.authorize({
-  type: "popup",
-  name: "Getting Started Application",
-  scope: {
-    read: true,
-    write: false },
-  expiration: "never",
-  authenticationSuccess,
-  authenticationFailure
-});
 
-//FEEDBACK
-var authenticationSuccess = function() { console.log("Successful authentication"); };
-var authenticationFailure = function() { console.log("Failed authentication"); };
 
 
 //USED IDS:
@@ -20,30 +6,54 @@ var authenticationFailure = function() { console.log("Failed authentication"); }
 //559e2b0a1b00224596d7e1e4
 
 
-$(document).ready(function(){
+$(document).ready(function() {
+
+  //AUTHORIZE THE USER
+  Trello.authorize({
+    type: "popup",
+    name: "Getting Started Application",
+    scope: {
+      read: true,
+      write: false
+    },
+    expiration: "never",
+    authenticationSuccess,
+    authenticationFailure
+  });
+
+  //FEEDBACK
+  var authenticationSuccess = function() {
+    console.log("Successful authentication");
+  };
+  var authenticationFailure = function() {
+    console.log("Failed authentication");
+  };
+
   //INSERT A CONTAINS METHOD IN THE STRING PROTOTYPE
-  String.prototype.contains = function(it) { return this.indexOf(it) != -1; };
+  String.prototype.contains = function(it) {
+    return this.indexOf(it) != -1;
+  };
 
   //FETCH BOARD BUTTON CLICKED
-  $('#fetch_board').on('click', function(){
+  $('#fetch_board').on('click', function() {
     //USER IS AUTHENTICATED?
-    if(authenticationSuccess) {
+    if (authenticationSuccess) {
       //GRAB Board name
       var boardToGet = $('#board_name').val();
 
       //IF THERE WAS AN ISSUE
-      var error = function(errorMsg){
+      var error = function(errorMsg) {
         $('#status').html("SORRY THERE WAS AN ISSUE!!! <br>" + errorMsg)
-        .addClass("alert-danger");
+          .addClass("alert-danger");
       };
 
-      var success = function(successMsg){
+      var success = function(successMsg) {
         $('#status').html("The board was fetched <br>" + successMsg)
           .addClass("alert-success");
 
         for (board of successMsg) {
 
-          if(board.name == boardToGet) {
+          if (board.name == boardToGet) {
             //BINGO WE FOUND THAT BOARD
             $('#status').html(JSON.stringify(board))
               .addClass("alert-success");
@@ -62,13 +72,13 @@ $(document).ready(function(){
     }
   });
 
-  $('#fetch_list').on('click', function(){
-    if(authenticationSuccess) {
+  $('#fetch_list').on('click', function() {
+    if (authenticationSuccess) {
       var success = function(successMsg) {
         console.log(successMsg);
 
         for (var i = 0; i < successMsg.length; i++) {
-          if(successMsg[i].name.contains("2015")){
+          if (successMsg[i].name.contains("2015")) {
             console.log(successMsg[i].name);
             console.log(successMsg[i]);
           }
@@ -83,9 +93,11 @@ $(document).ready(function(){
     }
   });
 
-  $('#get_all_boards').on('click', function(){
-    if(authenticationSuccess) {
-      Trello.get('members/me/boards/', {fields: "id,name,closed"}, function(boardsArray, err){
+  $('#get_all_boards').on('click', function() {
+    if (authenticationSuccess) {
+      Trello.get('members/me/boards/', {
+        fields: "id,name,closed"
+      }, function(boardsArray, err) {
         // if(err) console.log(err);
         for (var i = 0; i < boardsArray.length; i++) {
           console.log(boardsArray[i]);
@@ -96,11 +108,13 @@ $(document).ready(function(){
     }
   });
 
-  $('#get_all_lists').on('click', function(){
+  $('#get_all_lists').on('click', function() {
     //massboard id
     //559e2b0a1b00224596d7e1e4
-    if(authenticationSuccess) {
-      Trello.get('/boards/559e2b0a1b00224596d7e1e4/lists', {fields: "id,name,closed"}, function(success, error){
+    if (authenticationSuccess) {
+      Trello.get('/boards/559e2b0a1b00224596d7e1e4/lists', {
+        fields: "id,name,closed"
+      }, function(success, error) {
         console.log(success);
         for (var i = 0; i < success.length; i++) {
           $('#status').append(success[i].name + "<br>");
@@ -109,37 +123,57 @@ $(document).ready(function(){
     }
   });
 
-  $('#search').on('click', function(){
-    if(authenticationSuccess) {
+  $('#search').on('click', function() {
       //BabyLove BOARD ID
       //559e675d35adcdb876f96958
-  var tok = localStorage.getItem("trello_token");
-  var key = "";
+      var tok = localStorage.getItem("trello_token");
+      var key = "";
 
-  $("#status").html("");
-  // console.log(tok);
-  // console.log(key);
+      $("#status").html("");
+      // console.log(tok);
+      // console.log(key);
 
       $.ajax({
-        url: "https://api.trello.com/1/search?query=is:archived&key="+key+"&token="+tok,
+        url: "https://api.trello.com/1/search?query=is:archived&key=" + key + "&token=" + tok,
         cache: false,
-        success: function(data){
+        success: function(data) {
           console.log(data);
           for (var i = 0; i < data.cards.length; i++) {
             $("#status").append(data.cards[i].name + "<br>");
           }
         }
       });
-    }
   });
 
-  $('#get_all_cards').on('click', function(){
-    if(authenticationSuccess) {
-      Trello.get('/members/me/cards', function(success, error){
+  $('#getJSONP').on('click', function() {
+
+      $("#status").html("");
+
+      Trello
+        .post("cards", { name: "Foo", desc: "Bar", idList:"559e67012a269fc0fc635dd7"})
+        .done(function(card) { alert(card.id) });
+
+  });
+
+  $('#get_all_cards').on('click', function() {
+    if (authenticationSuccess) {
+      Trello.get('/members/me/cards', function(success, error) {
         console.log(success);
       });
     }
   });
 
+  $('#test').on('click', function() {
+    Trello.get("boards/559e675d35adcdb876f96958", {lists:"closed"}, function(board) {
+	     console.log(board);
 
+       for (var i = 0; i < board.lists.length; i++) {
+        console.log(board.lists[i].name);
+       }
+
+      //  Trello.get("card"+board.lists[i].id, {}, function(card){
+      //    console.log(card);
+      //  });
+     });
+   });
 });
