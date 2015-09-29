@@ -129,9 +129,7 @@ $(document).ready(function() {
       var tok = localStorage.getItem("trello_token");
       var key = "";
 
-      $("#status").html("");
-      // console.log(tok);
-      // console.log(key);
+      $("#status").append('<div class="col-sm-3"></div>');
 
       $.ajax({
         url: "https://api.trello.com/1/search?query=is:archived&key=" + key + "&token=" + tok,
@@ -139,21 +137,13 @@ $(document).ready(function() {
         success: function(data) {
           console.log(data);
           for (var i = 0; i < data.cards.length; i++) {
-            $("#status").append(data.cards[i].name + "<br>");
+            $("#status").append('<div class="col-sm-3">'+data.cards[i].name+'-----------'+data.cards[i].dateLastActivity+'</div>' + "<br>");
           }
         }
       });
   });
 
-  $('#getJSONP').on('click', function() {
 
-      $("#status").html("");
-
-      Trello
-        .post("cards", { name: "Foo", desc: "Bar", idList:"559e67012a269fc0fc635dd7"})
-        .done(function(card) { alert(card.id) });
-
-  });
 
   $('#get_all_cards').on('click', function() {
     if (authenticationSuccess) {
@@ -171,9 +161,6 @@ $(document).ready(function() {
         console.log(board.lists[i].name);
        }
 
-      //  Trello.get("card"+board.lists[i].id, {}, function(card){
-      //    console.log(card);
-      //  });
      });
    });
 });
