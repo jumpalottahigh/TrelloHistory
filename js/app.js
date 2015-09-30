@@ -129,6 +129,8 @@ $(document).ready(function() {
       var tok = localStorage.getItem("trello_token");
       var key = "";
 
+      var date = {};
+
       $("#status").append('<div class="col-sm-3"></div>');
 
       $.ajax({
@@ -137,7 +139,11 @@ $(document).ready(function() {
         success: function(data) {
           console.log(data);
           for (var i = 0; i < data.cards.length; i++) {
+            date = data.cards[i].dateLastActivity;
             $("#status").append('<div class="col-sm-3">'+data.cards[i].name+'-----------'+data.cards[i].dateLastActivity+'</div>' + "<br>");
+            console.log(date);
+            console.log(JSON.stringify(date));
+            console.log(JSON.parse(date));
           }
         }
       });
