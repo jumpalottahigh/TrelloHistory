@@ -1,36 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="author" content="Georgi Yanev">
   <title>Trello History Reader</title>
   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-  <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-  <script src="https://api.trello.com/1/client.js?key=[YOURKEY]"></script>
-  <script src="assets/js/app.js"></script>
+
+  <!-- Will refactor this later into its own file -->
+  <style>
+    .card {
+      flex: auto;
+      margin: 1rem;
+      padding: 1rem;
+      border: 1px solid #df9042;
+      box-shadow: 2px 2px 2px 2px #cecece;
+    }
+
+    .margin-top {
+      margin-top: 1rem;
+    }
+
+    .flexbox-container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  </style>
 </head>
+
 <body>
   <main>
     <div class="container">
       <div class="row text-center">
-        <h1>Done by Month</h1>
-        <form class="form-horizontal" id="boards_form">
-          <div class="form-group col-sm-6">
-            <label class="control-label">Choose your board</label>
-              <select class="form-control" id="boards"></select>
+        <h1 class="col-xs-12 text-info">Done by Month</h1>
+        <p>This app assumes you are usings lists named 'May 2016' to move your done cards to.</p>
+        <form class="form-horizontal row" id="boards_form">
+          <div class="form-group col-sm-4">
+            <label for="textBoardName" class="control-label">Board name:</label>
+            <input id="textBoardName" type="text" class="form-control">
           </div>
-          <div class="form-group col-sm-6">
-            <label class="control-label">Choose month and year</label>
-            <select class="form-control" id="monthAndYear">
-              <option value="july 2015">July 2015</option>
-              <option value="august 2015">August 2015</option>
-              <option value="september 2015">September 2015</option>
-              <option value="october 2015">October 2015</option>
-              <option value="november 2015">November 2015</option>
-              <option value="december 2015">December 2015</option>
-              <option value="january 2016">January 2016</option>
-              <option value="february 2016">February 2016</option>
-              <option value="march 2016" selected>March 2016</option>
+          <div class="form-group col-sm-4">
+            <label for="selectMonth" class="control-label">Month:</label>
+            <select id="selectMonth" class="form-control">
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="selectYear" class="control-label">Year:</label>
+            <select id="selectYear" class="form-control">
+              <option value="2015">2015</option>
+              <option value="2016">2016</option>
             </select>
           </div>
         </form>
@@ -39,30 +69,18 @@
           <button id="fetch" class="btn btn-primary">Fetch data</button>
         </div>
       </div>
-      <!-- <div class="row">
-        <div id="boardName"></div>
-      </div> -->
-      <!-- <div class="row flex-container">
-        <div id="jan" class="col-xs-2 month-box"></div>
-        <div id="feb" class="col-xs-2 month-box"></div>
-        <div id="mar" class="col-xs-2 month-box"></div>
-        <div id="apr" class="col-xs-2 month-box"></div>
-        <div id="may" class="col-xs-2 month-box"></div>
-        <div id="jun" class="col-xs-2 month-box"></div>
-        <div id="jul" class="col-xs-2 month-box"></div>
-        <div id="aug" class="col-xs-2 month-box"></div>
-        <div id="sep" class="col-xs-2 month-box"></div>
-        <div id="oct" class="col-xs-2 month-box"></div>
-        <div id="nov" class="col-xs-2 month-box"></div>
-        <div id="dec" class="col-xs-2 month-box"></div>
-      </div> -->
-      <div class="row">
-        <div id="monthOutput" class="col-xs-12">
-
-        </div>
+      <div class="row text-center">
+        <h2 id="monthAndYear" class="col-xs-12">Current month</h2>
+      </div>
+      <div id="monthCards" class="row text-center flexbox-container">
       </div>
     </div>
   </main>
 
+  <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+  <script src="assets/js/moment.min.js"></script>
+  <script src="https://api.trello.com/1/client.js?key=792033c81609b0d2aaf03dbee2af28ee&token=8076a052f83efbb376c9967ebe02ad0963ff0ef4a2e90e243377a4e7715146dc"></script>
+  <script src="assets/js/logic.js"></script>
 </body>
+
 </html>
